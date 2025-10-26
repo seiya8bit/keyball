@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , TD(P_LAYR)     ,
-    KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_H           , KC_J           , KC_K           , KC_L           , LT(4, KC_ENT)  ,
+    KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_H           , KC_J           , KC_K           , KC_L           , LT(5, KC_ENT)  ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
     LSFT_T(KC_ESC)  , KC_PSCR        , KC_LGUI        , MO(3)          , KC_LCTL        , MO(2)          , LT(1, KC_SPC)  , KC_RALT        , _______        , _______        , _______        , KC_RSFT
   ),
@@ -46,19 +46,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_universal(
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
-    _______         , KC_PGUP        , KC_UP          , KC_PGDN        , _______        ,                                   _______        , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
+    _______         , KC_PGUP        , KC_UP          , KC_PGDN        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , KC_LEFT        , KC_DOWN        , KC_RGHT        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
-    _______         , _______        , _______        , _______        , _______        , _______        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , _______
+    _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
   [4] = LAYOUT_universal(
+    _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
+    _______         , _______        , _______        , _______        , _______        ,                                   _______        , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
+    _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
+    _______         , _______        , _______        , _______        , _______        , _______        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , _______
+  ),
+
+  [5] = LAYOUT_universal(
     AML_TO          , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     KBC_SAVE        , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
-  [5] = LAYOUT_universal(
+  [6] = LAYOUT_universal(
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   _______        , _______        , _______        , _______        , _______        ,
     KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   _______        , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   _______        , _______        , _______        , _______        , _______        ,
@@ -68,8 +75,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 4
-    keyball_set_scroll_mode(get_highest_layer(state) == 4);
+    // Auto enable scroll mode when the highest layer is 5
+    keyball_set_scroll_mode(get_highest_layer(state) == 5);
     return state;
 }
 
