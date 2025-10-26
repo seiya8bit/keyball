@@ -7,5 +7,6 @@
 #ifdef TAP_DANCE_ENABLE
 enum {
     P_LAYR,
+    CT_SHFT,
 };
 #endif
