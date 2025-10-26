@@ -15,6 +15,8 @@ typedef enum {
     TD_TRIPPLE_TAP
 } td_state_t;
 
+#define PL_LAYER 6
+
 typedef struct {
     bool is_press_action;
     td_state_t state;
@@ -52,16 +54,16 @@ void pl_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_P);
             break;
         case TD_SINGLE_HOLD:
-            layer_on(6);
+            layer_on(PL_LAYER);
             break;
         case TD_TRIPPLE_TAP:
             // Check to see if the layer is already set
-            if (layer_state_is(6)) {
+            if (layer_state_is(PL_LAYER)) {
                 // If already set, then switch it off
-                layer_off(6);
+                layer_off(PL_LAYER);
             } else {
                 // If not already set, then switch the layer on
-                layer_on(6);
+                layer_on(PL_LAYER);
             }
             break;
         default:
@@ -72,7 +74,7 @@ void pl_finished(tap_dance_state_t *state, void *user_data) {
 void pl_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (pl_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(6);
+        layer_off(PL_LAYER);
     }
     pl_tap_state.state = TD_NONE;
 }
