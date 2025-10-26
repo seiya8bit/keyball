@@ -110,7 +110,7 @@ void ct_shft_finished(tap_dance_state_t *state, void *user_data) {
             break;
         case TD_DOUBLE_HOLD:
             register_code(KC_LCTL);
-            register_code(KC_LSHIFT);
+            register_code(KC_LSFT);
             break;
         default:
             break;
@@ -123,8 +123,8 @@ void ct_shft_reset(tap_dance_state_t *state, void *user_data) {
             unregister_code(KC_LCTL);
             break;
         case TD_DOUBLE_HOLD:
-            unregister_code(KC_LSHIFT);
             unregister_code(KC_LCTL);
+            unregister_code(KC_LSFT);
             break;
         default:
             break;
