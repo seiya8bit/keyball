@@ -52,16 +52,16 @@ void pl_finished(tap_dance_state_t *state, void *user_data) {
             tap_code(KC_P);
             break;
         case TD_SINGLE_HOLD:
-            layer_on(5);
+            layer_on(6);
             break;
         case TD_TRIPPLE_TAP:
             // Check to see if the layer is already set
-            if (layer_state_is(5)) {
+            if (layer_state_is(6)) {
                 // If already set, then switch it off
-                layer_off(5);
+                layer_off(6);
             } else {
                 // If not already set, then switch the layer on
-                layer_on(5);
+                layer_on(6);
             }
             break;
         default:
@@ -72,7 +72,7 @@ void pl_finished(tap_dance_state_t *state, void *user_data) {
 void pl_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (pl_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(5);
+        layer_off(6);
     }
     pl_tap_state.state = TD_NONE;
 }
