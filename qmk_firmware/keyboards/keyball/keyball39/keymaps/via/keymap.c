@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Symbol
   [2] = LAYOUT_universal(
-    S(KC_9)         , S(KC_0)        , S(KC_1)        , S(KC_4)        , S(KC_7)        ,                                   S(KC_GRV)      , KC_GRV         , KC_QUOT	       , KC_QUOT        , KC_SLSH        ,
+    S(KC_9)         , S(KC_0)        , S(KC_1)        , S(KC_4)        , S(KC_7)        ,                                   S(KC_GRV)      , KC_GRV         , KC_QUOT	       , S(KC_QUOT)     , KC_SLSH        ,
     KC_LBRC         , KC_RBRC        , S(KC_2)        , S(KC_5)        , S(KC_8)        ,                                   S(KC_SCLN)     , KC_SCLN        , KC_COMM        , KC_DOT         , S(KC_NUBS)     ,
     S(KC_LBRC)      , S(KC_RBRC)     , S(KC_3)        , S(KC_6)        , _______        ,                                   S(KC_EQL)      , KC_MINS        , KC_EQL         , S(KC_MINS)     , KC_NUBS        ,
     S(KC_COMM)      , S(KC_DOT)      , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , S(KC_SLSH)
