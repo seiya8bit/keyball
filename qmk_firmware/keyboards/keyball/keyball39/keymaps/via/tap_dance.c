@@ -6,37 +6,6 @@
 #include "tap_dance.h"
 
 #ifdef TAP_DANCE_ENABLE
-// Define a type for as many tap dance states as you need
-typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
-    TD_DOUBLE_TAP,
-    TD_DOUBLE_HOLD,
-    TD_TRIPPLE_TAP,
-    TD_TRIPLE_HOLD,
-} td_state_t;
-
-#define PL_LAYER 6
-
-typedef struct {
-    bool is_press_action;
-    td_state_t state;
-} td_tap_t;
-
-// Declare the functions to be used with your tap dance key(s)
-
-// Function associated with all tap dances
-td_state_t cur_dance(tap_dance_state_t *state);
-
-// P - Layer6
-void pl_finished(tap_dance_state_t *state, void *user_data);
-void pl_reset(tap_dance_state_t *state, void *user_data);
-
-// Ctrl - Ctrl+Shift
-void ct_shft_finished(tap_dance_state_t *state, void *user_data);
-void ct_shft_reset(tap_dance_state_t *state, void *user_data);
 
 // Determine the current tap dance state
 td_state_t cur_dance(tap_dance_state_t *state) {
@@ -55,83 +24,6 @@ td_state_t cur_dance(tap_dance_state_t *state) {
     return TD_UNKNOWN;
 }
 
-// Initialize tap structure associated with example tap dance key
-static td_tap_t pl_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-static td_tap_t ct_shft_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-// Functions that control what our tap dance key does
-void pl_finished(tap_dance_state_t *state, void *user_data) {
-    pl_tap_state.state = cur_dance(state);
-    switch (pl_tap_state.state) {
-        case TD_SINGLE_TAP:
-            tap_code(KC_P);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_on(PL_LAYER);
-            break;
-        case TD_TRIPPLE_TAP:
-            // Check to see if the layer is already set
-            if (layer_state_is(PL_LAYER)) {
-                // If already set, then switch it off
-                layer_off(PL_LAYER);
-            } else {
-                // If not already set, then switch the layer on
-                layer_on(PL_LAYER);
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-void pl_reset(tap_dance_state_t *state, void *user_data) {
-    // If the key was held down and now is released then switch off the layer
-    if (pl_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(PL_LAYER);
-    }
-    pl_tap_state.state = TD_NONE;
-}
-
-void ct_shft_finished(tap_dance_state_t *state, void *user_data) {
-    ct_shft_tap_state.state = cur_dance(state);
-    switch (ct_shft_tap_state.state) {
-        case TD_SINGLE_TAP:
-            tap_code(KC_LCTL);
-            break;
-        case TD_SINGLE_HOLD:
-            register_code(KC_LCTL);
-            break;
-        case TD_DOUBLE_HOLD:
-            register_code(KC_LCTL);
-            register_code(KC_LSFT);
-            break;
-        default:
-            break;
-    }
-}
-
-void ct_shft_reset(tap_dance_state_t *state, void *user_data) {
-    switch (ct_shft_tap_state.state) {
-        case TD_SINGLE_HOLD:
-            unregister_code(KC_LCTL);
-            break;
-        case TD_DOUBLE_HOLD:
-            unregister_code(KC_LCTL);
-            unregister_code(KC_LSFT);
-            break;
-        default:
-            break;
-    }
-    ct_shft_tap_state.state = TD_NONE;
-}
-
 // Associate our tap dance key with its functionality
 tap_dance_action_t tap_dance_actions[] = {
     [P_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pl_finished, pl_reset),
@@ -147,4 +39,5 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 }
+
 #endif
