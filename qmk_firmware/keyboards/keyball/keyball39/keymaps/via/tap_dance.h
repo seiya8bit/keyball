@@ -18,8 +18,6 @@ typedef enum {
     TD_TRIPLE_HOLD,
 } td_state_t;
 
-#define PL_LAYER 6
-
 typedef struct {
     bool is_press_action;
     td_state_t state;
@@ -28,11 +26,11 @@ typedef struct {
 td_state_t cur_dance(tap_dance_state_t *state);
 
 enum {
-    P_LAYR,
-    CT_SHFT,
+    P_LHDEV,
+    CTL_SHFT,
 };
 
-#include "tap_dance/ct_shft.h"
-#include "tap_dance/pl.h"
+#include "tap_dance/td_ctl_sft.h"
+#include "tap_dance/td_p_lhdev.h"
 
 #endif

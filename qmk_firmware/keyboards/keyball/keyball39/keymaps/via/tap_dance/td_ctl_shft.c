@@ -1,15 +1,15 @@
-#include "tap_dance/ct_shft.h"
+#include "tap_dance/td_ctl_shft.h"
 
 #ifdef TAP_DANCE_ENABLE
 
-static td_tap_t ct_shft_tap_state = {
+static td_tap_t td_ctl_shft_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
 
-void ct_shft_finished(tap_dance_state_t *state, void *user_data) {
-    ct_shft_tap_state.state = cur_dance(state);
-    switch (ct_shft_tap_state.state) {
+void td_ctl_sft_finished(tap_dance_state_t *state, void *user_data) {
+    td_ctl_shft_state.state = cur_dance(state);
+    switch (td_ctl_shft_state.state) {
         case TD_SINGLE_TAP:
             tap_code(KC_LCTL);
             break;
@@ -25,8 +25,8 @@ void ct_shft_finished(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void ct_shft_reset(tap_dance_state_t *state, void *user_data) {
-    switch (ct_shft_tap_state.state) {
+void td_ctl_sft_reset(tap_dance_state_t *state, void *user_data) {
+    switch (td_ctl_shft_state.state) {
         case TD_SINGLE_HOLD:
             unregister_code(KC_LCTL);
             break;
@@ -37,7 +37,7 @@ void ct_shft_reset(tap_dance_state_t *state, void *user_data) {
         default:
             break;
     }
-    ct_shft_tap_state.state = TD_NONE;
+    td_ctl_shft_state.state = TD_NONE;
 }
 
 #endif
