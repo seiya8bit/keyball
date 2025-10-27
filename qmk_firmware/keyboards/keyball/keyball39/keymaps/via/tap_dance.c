@@ -31,7 +31,7 @@ tap_dance_action_t tap_dance_actions[] = {
         td_p_lhdev_finished,
         td_p_lhdev_reset,
     ),
-    [CTL_SHFT] = ACTION_TAP_DANCE_FN_ADVANCED(
+    [CTL_SFT] = ACTION_TAP_DANCE_FN_ADVANCED(
         NULL,
         td_ctl_sft_finished,
         td_ctl_sft_reset,
