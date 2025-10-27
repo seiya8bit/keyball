@@ -1,8 +1,5 @@
 // https://docs.qmk.fm/features/tap_dance#example-6
 
-#include QMK_KEYBOARD_H
-
-#include "quantum.h"
 #include "tap_dance.h"
 
 #ifdef TAP_DANCE_ENABLE

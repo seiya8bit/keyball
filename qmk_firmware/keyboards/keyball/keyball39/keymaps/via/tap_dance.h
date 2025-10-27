@@ -4,6 +4,8 @@
 
 #include QMK_KEYBOARD_H
 
+#include "quantum.h"
+
 #ifdef TAP_DANCE_ENABLE
 
 // Define a type for as many tap dance states as you need
