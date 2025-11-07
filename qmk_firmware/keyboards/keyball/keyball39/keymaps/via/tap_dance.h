@@ -28,7 +28,7 @@ typedef struct {
 td_state_t cur_dance(tap_dance_state_t *state);
 
 enum {
-    P_LHDEV,
+    LHDEV,
     CTL_SFT,
 };
 

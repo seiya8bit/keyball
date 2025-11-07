@@ -25,10 +25,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Default
   [0] = LAYOUT_universal(
-    KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , TD(P_LHDEV)    ,
-    KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_H           , KC_J           , KC_K           , KC_L           , LT(5, KC_ENT)  ,
+    KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , KC_P           ,
+    KC_A            , KC_S           , LT(5, KC_D)    , LT(4, KC_F)    , KC_G           ,                                   KC_H           , LT(3, KC_J)    , KC_K           , KC_L           , KC_ENT         ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
-    LT(4, KC_ESC)   , KC_PSCR        , KC_LGUI        , KC_LSFT        , TD(CTL_SFT)   , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , MO(3)
+    KC_ESC          , KC_PSCR        , KC_LGUI        , KC_LSFT        , TD(CTL_SFT)   , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
   ),
 
   // Number/Functions
@@ -73,10 +73,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Left-hand Device
   [6] = LAYOUT_universal(
-    KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_1           , KC_2           , KC_3           , KC_4           , TD(P_LHDEV)    ,
+    KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_1           , KC_2           , KC_3           , KC_4           , KC_5           ,
     KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_F2          , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_LEFT        , KC_DOWN        , KC_UP          , KC_RGHT        , _______        ,
-    KC_ESC          , _______        , _______        , KC_SPC         , KC_LCTL        , KC_LSFT        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , _______
+    KC_ESC          , _______        , _______        , KC_SPC         , KC_LCTL        , KC_LSFT        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , TD(LHDEV)
   ),
 };
 // clang-format on
