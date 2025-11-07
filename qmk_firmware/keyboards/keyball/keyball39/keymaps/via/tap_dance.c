@@ -4,6 +4,9 @@
 
 #ifdef TAP_DANCE_ENABLE
 
+#include "tap_dance/td_ctl_sft.h"
+#include "tap_dance/td_p_lhdev.h"
+
 // Determine the current tap dance state
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {

@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , TD(P_LHDEV)    ,
     KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_H           , KC_J           , KC_K           , KC_L           , LT(5, KC_ENT)  ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
-    KC_ESC          , KC_PSCR        , KC_LGUI        , KC_LSFT        , TD(CTL_SFT)   , MO(1)          , MO(2)          , RALT_T(KC_SPC) , _______        , _______        , _______        , MO(3)
+    LT(4, KC_ESC)   , KC_PSCR        , KC_LGUI        , KC_LSFT        , TD(CTL_SFT)   , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , MO(3)
   ),
 
   // Number/Functions
@@ -41,10 +41,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Symbol
   [2] = LAYOUT_universal(
-    S(KC_9)         , S(KC_0)        , S(KC_1)        , S(KC_4)        , S(KC_7)        ,                                   S(KC_GRV)      , KC_GRV         , KC_QUOT	       , S(KC_QUOT)     , KC_SLSH        ,
-    KC_LBRC         , KC_RBRC        , S(KC_2)        , S(KC_5)        , S(KC_8)        ,                                   S(KC_SCLN)     , KC_SCLN        , KC_COMM        , KC_DOT         , S(KC_NUBS)     ,
-    S(KC_LBRC)      , S(KC_RBRC)     , S(KC_3)        , S(KC_6)        , _______        ,                                   S(KC_EQL)      , KC_MINS        , KC_EQL         , S(KC_MINS)     , KC_NUBS        ,
-    S(KC_COMM)      , S(KC_DOT)      , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , S(KC_SLSH)
+    S(KC_9)         , S(KC_0)        , S(KC_1)        , S(KC_4)        , S(KC_7)        ,                                   S(KC_GRV)      , S(KC_MINS)     , KC_GRV         , S(KC_EQL)      , KC_SLSH        ,
+    KC_LBRC         , KC_RBRC        , S(KC_2)        , S(KC_5)        , S(KC_8)        ,                                   S(KC_SCLN)     , KC_SCLN        , KC_QUOT        , KC_MINS        , S(KC_NUBS)     ,
+    S(KC_LBRC)      , S(KC_RBRC)     , S(KC_3)        , S(KC_6)        , S(KC_SLSH)     ,                                   KC_COMM        , KC_DOT         , S(KC_QUOT)     , KC_EQL         , KC_NUBS        ,
+    S(KC_COMM)      , S(KC_DOT)      , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
   // Arrow
@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Left-hand Device
   [6] = LAYOUT_universal(
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_1           , KC_2           , KC_3           , KC_4           , TD(P_LHDEV)    ,
-    KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   _______        , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
+    KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_F2          , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_LEFT        , KC_DOWN        , KC_UP          , KC_RGHT        , _______        ,
     KC_ESC          , _______        , _______        , KC_SPC         , KC_LCTL        , KC_LSFT        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , _______
   ),

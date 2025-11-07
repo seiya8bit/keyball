@@ -32,7 +32,4 @@ enum {
     CTL_SFT,
 };
 
-#include "tap_dance/td_ctl_sft.h"
-#include "tap_dance/td_p_lhdev.h"
-
 #endif
