@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , KC_P           ,
     KC_A            , KC_S           , LT(5, KC_D)    , LT(4, KC_F)    , KC_G           ,                                   KC_H           , LT(3, KC_J)    , KC_K           , KC_L           , KC_ENT         ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
-    KC_ESC          , KC_PSCR        , KC_LGUI        , KC_LSFT        , TD(CTL_SFT)   , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
+    KC_LGUI         , KC_ESC         , KC_PSCR        , KC_LSFT        , TD(CTL_SFT)    , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
   ),
 
   // Number/Functions
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Arrow
   [3] = LAYOUT_universal(
-    _______         , KC_PGUP        , KC_UP          , KC_PGDN        , _______        ,                                   _______        , _______        , _______        , _______        , TO(0)          ,
+    _______         , KC_PGUP        , KC_UP          , KC_PGDN        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , KC_LEFT        , KC_DOWN        , KC_RGHT        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
@@ -65,10 +65,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Scroll
   [5] = LAYOUT_universal(
-    KBC_SAVE        , DT_PRNT        , DT_UP          , DT_DOWN        , AML_TO         ,                                   _______        , _______        , _______        , _______        , _______        ,
-    _______         , _______        , _______        , CPI_I100       , AML_I50        ,                                   _______        , _______        , _______        , _______        , _______        ,
-    EE_CLR          , _______        , _______        , CPI_D100       , AML_D50        ,                                   _______        , _______        , _______        , _______        , _______        ,
-    _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
+    _______         , DT_PRNT        , DT_UP          , DT_DOWN        , AML_TO         ,                                   _______        , _______        , _______        , _______        , _______        ,
+    KBC_SAVE        , _______        , _______        , CPI_I100       , AML_I50        ,                                   _______        , _______        , _______        , _______        , _______        ,
+    _______         , _______        , _______        , CPI_D100       , AML_D50        ,                                   _______        , _______        , _______        , _______        , _______        ,
+    EE_CLR          , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
   // Left-hand Device
