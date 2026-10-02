@@ -19,7 +19,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
-#include "tap_dance.h"
+
+enum layers {
+    _BASE,
+    _NUM,    // numbers and function keys
+    _SYM,
+    _ARROW,
+    _MOUSE,  // auto mouse layer
+    _SCROLL, // also trackball settings and numpad
+    _GAME,
+};
+
+_Static_assert(_MOUSE == AUTO_MOUSE_DEFAULT_LAYER, "Update AUTO_MOUSE_DEFAULT_LAYER in config.h");
 
 enum custom_keycodes {
     // Ctrl, or Ctrl+Shift when pressed right after a lone tap
@@ -29,70 +40,81 @@ enum custom_keycodes {
 // How long a lone tap of CTL_SFT arms Shift for the next press
 #define CTL_SFT_ARM_TERM 500
 
+enum tap_dances {
+    TD_GAME,
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+    // Double tap toggles the game layer
+    [TD_GAME] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, _GAME),
+};
+
+// Layer taps on home row keys
+#define D_SCRL  LT(_SCROLL, KC_D)
+#define F_MOUSE LT(_MOUSE, KC_F)
+#define J_ARROW LT(_ARROW, KC_J)
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // Default
-  [0] = LAYOUT_universal(
+  [_BASE] = LAYOUT_universal(
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , KC_P           ,
-    KC_A            , KC_S           , LT(5, KC_D)    , LT(4, KC_F)    , KC_G           ,                                   KC_H           , LT(3, KC_J)    , KC_K           , KC_L           , KC_ENT         ,
+    KC_A            , KC_S           , D_SCRL         , F_MOUSE        , KC_G           ,                                   KC_H           , J_ARROW        , KC_K           , KC_L           , KC_ENT         ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
-    KC_LGUI         , KC_ESC         , KC_PSCR        , KC_LSFT        , CTL_SFT        , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
+    KC_LGUI         , KC_ESC         , KC_PSCR        , KC_LSFT        , CTL_SFT        , MO(_NUM)       , MO(_SYM)        , RALT_T(KC_SPC) , XXXXXXX        , XXXXXXX        , XXXXXXX        , TD(TD_GAME)
   ),
 
-  // Number/Functions
-  [1] = LAYOUT_universal(
+  [_NUM] = LAYOUT_universal(
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     KC_F1           , KC_F2          , KC_F3          , KC_F4          , KC_F5          ,                                   KC_1           , KC_2           , KC_3           , KC_4           , KC_5           ,
     KC_F6           , KC_F7          , KC_F8          , KC_F9          , KC_F10         ,                                   KC_6           , KC_7           , KC_8           , KC_9           , KC_0           ,
     KC_F11          , KC_F12         , KC_F13         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
-  // Symbol
-  [2] = LAYOUT_universal(
+  [_SYM] = LAYOUT_universal(
     S(KC_9)         , S(KC_0)        , S(KC_1)        , S(KC_4)        , S(KC_7)        ,                                   S(KC_GRV)      , S(KC_MINS)     , KC_GRV         , S(KC_EQL)      , KC_SLSH        ,
     KC_LBRC         , KC_RBRC        , S(KC_2)        , S(KC_5)        , S(KC_8)        ,                                   S(KC_SCLN)     , KC_SCLN        , KC_QUOT        , KC_MINS        , S(KC_NUBS)     ,
     S(KC_LBRC)      , S(KC_RBRC)     , S(KC_3)        , S(KC_6)        , S(KC_SLSH)     ,                                   KC_COMM        , KC_DOT         , S(KC_QUOT)     , KC_EQL         , KC_NUBS        ,
     S(KC_COMM)      , S(KC_DOT)      , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
-  // Arrow
-  [3] = LAYOUT_universal(
+  [_ARROW] = LAYOUT_universal(
     _______         , KC_PGUP        , KC_UP          , KC_PGDN        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , KC_LEFT        , KC_DOWN        , KC_RGHT        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
   ),
 
-  // Mouse
-  [4] = LAYOUT_universal(
+  [_MOUSE] = LAYOUT_universal(
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
     _______         , _______        , _______        , _______        , _______        ,                                   _______        , _______        , _______        , _______        , _______        ,
     _______         , _______        , _______        , _______        , _______        , _______        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , _______
   ),
 
-  // Scroll
-  [5] = LAYOUT_universal(
+  [_SCROLL] = LAYOUT_universal(
     _______         , DT_PRNT        , DT_UP          , DT_DOWN        , AML_TO         ,                                   KC_PSLS        , KC_7           , KC_8           , KC_9           , KC_PMNS        ,
     KBC_SAVE        , _______        , _______        , CPI_I100       , AML_I50        ,                                   KC_DOT         , KC_4           , KC_5           , KC_6           , KC_PPLS        ,
     _______         , _______        , _______        , CPI_D100       , AML_D50        ,                                   KC_0           , KC_1           , KC_2           , KC_3           , _______        ,
     _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , EE_CLR
   ),
 
-  // Left-hand Device
-  [6] = LAYOUT_universal(
+  [_GAME] = LAYOUT_universal(
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_1           , KC_2           , KC_3           , KC_4           , KC_5           ,
     KC_A            , KC_S           , KC_D           , KC_F           , KC_G           ,                                   KC_F2          , KC_BTN1        , KC_BTN3        , KC_BTN2        , _______        ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_LEFT        , KC_DOWN        , KC_UP          , KC_RGHT        , _______        ,
-    KC_ESC          , _______        , _______        , KC_SPC         , KC_LCTL        , KC_LSFT        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , TD(LHDEV)
+    KC_ESC          , _______        , _______        , KC_SPC         , KC_LCTL        , KC_LSFT        , KC_BTN4        , KC_BTN5        , _______        , _______        , _______        , TD(TD_GAME)
   ),
 };
 // clang-format on
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 5
-    keyball_set_scroll_mode(get_highest_layer(state) == 5);
+    keyball_set_scroll_mode(get_highest_layer(state) == _SCROLL);
     return state;
+}
+
+// Longer term for the double tap of TD_GAME
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    return IS_QK_TAP_DANCE(keycode) ? 275 : g_tapping_term;
 }
 
 // Layer taps sit on letter keys, so fast rolls must stay taps
@@ -167,7 +189,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 
 #ifdef OLED_ENABLE
 
-#include "lib/oledkit/oledkit.h"
+#    include "lib/oledkit/oledkit.h"
 
 void oledkit_render_info_user(void) {
     keyball_oled_render_keyinfo();
