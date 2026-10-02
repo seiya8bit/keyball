@@ -44,9 +44,15 @@ enum tap_dances {
     TD_GAME,
 };
 
+// Double tap toggles the game layer
+static void td_game_finished(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 2) {
+        layer_invert(_GAME);
+    }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    // Double tap toggles the game layer
-    [TD_GAME] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_NO, _GAME),
+    [TD_GAME] = ACTION_TAP_DANCE_FN(td_game_finished),
 };
 
 // Layer taps on home row keys
