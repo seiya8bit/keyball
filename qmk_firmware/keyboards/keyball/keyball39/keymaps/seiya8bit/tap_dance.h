@@ -28,7 +28,6 @@ td_state_t cur_dance(tap_dance_state_t *state);
 
 enum {
     LHDEV,
-    CTL_SFT,
 };
 
 #endif

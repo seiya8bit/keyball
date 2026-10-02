@@ -21,6 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "tap_dance.h"
 
+enum custom_keycodes {
+    // Ctrl, or Ctrl+Shift when pressed right after a lone tap
+    CTL_SFT = KEYBALL_SAFE_RANGE,
+};
+
+// How long a lone tap of CTL_SFT arms Shift for the next press
+#define CTL_SFT_ARM_TERM 500
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Default
@@ -28,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q            , KC_W           , KC_E           , KC_R           , KC_T           ,                                   KC_Y           , KC_U           , KC_I           , KC_O           , KC_P           ,
     KC_A            , KC_S           , LT(5, KC_D)    , LT(4, KC_F)    , KC_G           ,                                   KC_H           , LT(3, KC_J)    , KC_K           , KC_L           , KC_ENT         ,
     KC_Z            , KC_X           , KC_C           , KC_V           , KC_B           ,                                   KC_N           , KC_M           , KC_BSPC        , KC_DEL         , KC_TAB         ,
-    KC_LGUI         , KC_ESC         , KC_PSCR        , KC_LSFT        , TD(CTL_SFT)    , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
+    KC_LGUI         , KC_ESC         , KC_PSCR        , KC_LSFT        , CTL_SFT        , MO(1)          , MO(2)           , RALT_T(KC_SPC) , _______        , _______        , _______        , TD(LHDEV)
   ),
 
   // Number/Functions
@@ -92,17 +100,69 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     return !IS_QK_LAYER_TAP(keycode);
 }
 
-// Keep the auto mouse layer when TD(CTL_SFT) is pressed on it, for Ctrl+click.
+// Keep the auto mouse layer when CTL_SFT is pressed on it, for Ctrl+click.
 // Release must return the same result as press to keep the key tracker balanced.
 bool is_mouse_record_user(uint16_t keycode, keyrecord_t *record) {
     static bool ctl_sft_on_mouse_layer = false;
-    if (keycode != TD(CTL_SFT)) {
+    if (keycode != CTL_SFT) {
         return false;
     }
     if (record->event.pressed) {
         ctl_sft_on_mouse_layer = layer_state_is(get_auto_mouse_layer());
     }
     return ctl_sft_on_mouse_layer;
+}
+
+// CTL_SFT sends Ctrl immediately on press. If the previous press was a lone
+// tap, Shift is added once another key or the ball is used during this press.
+// Releasing without using anything else is a plain Ctrl tap, so a double tap
+// still sends Ctrl twice.
+static bool     ctl_sft_armed;       // previous press was a lone tap
+static bool     ctl_sft_shift_ready; // this press adds Shift on next use
+static bool     ctl_sft_shifted;     // Shift was registered by this press
+static bool     ctl_sft_lone;        // nothing else was used during this press
+static uint16_t ctl_sft_tap_time;
+
+static void ctl_sft_use(void) {
+    if (ctl_sft_shift_ready) {
+        register_code(KC_LSFT);
+        ctl_sft_shifted     = true;
+        ctl_sft_shift_ready = false;
+    }
+    ctl_sft_lone = false;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == CTL_SFT) {
+        if (record->event.pressed) {
+            ctl_sft_shift_ready = ctl_sft_armed && timer_elapsed(ctl_sft_tap_time) < CTL_SFT_ARM_TERM;
+            ctl_sft_lone        = true;
+            register_code(KC_LCTL);
+        } else {
+            if (ctl_sft_shifted) {
+                unregister_code(KC_LSFT);
+                ctl_sft_shifted = false;
+            }
+            unregister_code(KC_LCTL);
+            // A second lone tap disarms, so a double tap leaves plain Ctrl
+            ctl_sft_armed       = ctl_sft_lone && !ctl_sft_shift_ready;
+            ctl_sft_shift_ready = false;
+            ctl_sft_tap_time    = timer_read();
+        }
+        return false;
+    }
+    if (record->event.pressed) {
+        ctl_sft_use();
+        ctl_sft_armed = false;
+    }
+    return true;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    if (mouse_report.x || mouse_report.y || mouse_report.h || mouse_report.v) {
+        ctl_sft_use();
+    }
+    return mouse_report;
 }
 
 #ifdef OLED_ENABLE

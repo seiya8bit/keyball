@@ -4,7 +4,6 @@
 
 #ifdef TAP_DANCE_ENABLE
 
-#include "tap_dance/td_ctl_sft.h"
 #include "tap_dance/td_lhdev.h"
 
 // Determine the current tap dance state
@@ -26,8 +25,7 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 
 // Associate our tap dance key with its functionality
 tap_dance_action_t tap_dance_actions[] = {
-    [LHDEV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lhdev_finished, td_lhdev_reset),
-    [CTL_SFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_ctl_sft_finished, td_ctl_sft_reset)
+    [LHDEV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lhdev_finished, td_lhdev_reset)
 };
 
 // Set a long-ish tapping term for tap-dance keys
