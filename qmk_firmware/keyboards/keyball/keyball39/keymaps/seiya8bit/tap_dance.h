@@ -16,12 +16,11 @@ typedef enum {
     TD_SINGLE_HOLD,
     TD_DOUBLE_TAP,
     TD_DOUBLE_HOLD,
-    TD_TRIPPLE_TAP,
+    TD_TRIPLE_TAP,
     TD_TRIPLE_HOLD,
 } td_state_t;
 
 typedef struct {
-    bool is_press_action;
     td_state_t state;
 } td_tap_t;
 

@@ -65,10 +65,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Scroll
   [5] = LAYOUT_universal(
-    _______         , DT_PRNT        , DT_UP          , DT_DOWN        , AML_TO         ,                                   KC_PSLS        , KC_P7          , KC_P8          , KC_P9          , KC_PMNS        ,
-    KBC_SAVE        , _______        , _______        , CPI_I100       , AML_I50        ,                                   KC_PDOT        , KC_P4          , KC_P5          , KC_P6          , KC_PPLS        ,
-    _______         , _______        , _______        , CPI_D100       , AML_D50        ,                                   KC_P0          , KC_P1          , KC_P2          , KC_P3          , _______        ,
-    EE_CLR          , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______
+    _______         , DT_PRNT        , DT_UP          , DT_DOWN        , AML_TO         ,                                   KC_PSLS        , KC_7           , KC_8           , KC_9           , KC_PMNS        ,
+    KBC_SAVE        , _______        , _______        , CPI_I100       , AML_I50        ,                                   KC_DOT         , KC_4           , KC_5           , KC_6           , KC_PPLS        ,
+    _______         , _______        , _______        , CPI_D100       , AML_D50        ,                                   KC_0           , KC_1           , KC_2           , KC_3           , _______        ,
+    _______         , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , _______        , EE_CLR
   ),
 
   // Left-hand Device
@@ -85,6 +85,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 5
     keyball_set_scroll_mode(get_highest_layer(state) == 5);
     return state;
+}
+
+// Layer taps sit on letter keys, so fast rolls must stay taps
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    return !IS_QK_LAYER_TAP(keycode);
+}
+
+// Keep the auto mouse layer when TD(CTL_SFT) is pressed on it, for Ctrl+click.
+// Release must return the same result as press to keep the key tracker balanced.
+bool is_mouse_record_user(uint16_t keycode, keyrecord_t *record) {
+    static bool ctl_sft_on_mouse_layer = false;
+    if (keycode != TD(CTL_SFT)) {
+        return false;
+    }
+    if (record->event.pressed) {
+        ctl_sft_on_mouse_layer = layer_state_is(get_auto_mouse_layer());
+    }
+    return ctl_sft_on_mouse_layer;
 }
 
 #ifdef OLED_ENABLE

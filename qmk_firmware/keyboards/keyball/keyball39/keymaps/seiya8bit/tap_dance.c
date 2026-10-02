@@ -18,7 +18,7 @@ td_state_t cur_dance(tap_dance_state_t *state) {
         else return TD_DOUBLE_HOLD;
     }
     if (state->count == 3) {
-        if (!state->pressed) return TD_TRIPPLE_TAP;
+        if (!state->pressed) return TD_TRIPLE_TAP;
         else return TD_TRIPLE_HOLD;
     }
     return TD_UNKNOWN;

@@ -3,7 +3,6 @@
 #ifdef TAP_DANCE_ENABLE
 
 static td_tap_t td_lhdev_state = {
-    .is_press_action = true,
     .state = TD_NONE
 };
 

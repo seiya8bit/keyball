@@ -43,9 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_TERM 150
 #define QUICK_TAP_TERM 100
+// Needed for get_tapping_term() in tap_dance.c
+#define TAPPING_TERM_PER_KEY
 
-#define SPLIT_LAYER_STATE_ENABLE
-#define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD_PER_KEY
 
 // Reboot a half stuck as slave when USB enumeration is delayed (e.g. at PC boot)
 #define SPLIT_WATCHDOG_ENABLE
